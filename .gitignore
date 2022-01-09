@@ -1,0 +1,14 @@
+# Logs
+*.log
+
+# exclude everything
+data/mysql/*
+
+# exception to the rule
+!data/mysql/.gitkeep
+
+
+/.vscode
+/.cache
+/.idea
+/.gitattributes
