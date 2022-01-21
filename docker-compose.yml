@@ -6,7 +6,7 @@ services:
       context: "./php${PHP_VERSION}"
       dockerfile: "Dockerfile"
     container_name: 'lampp-php${PHP_VERSION}'
-    restart: 'always'
+    restart: on-failure
     environment:
       APACHE_DOCUMENT_ROOT: ${APACHE_DOCUMENT_ROOT-/var/www/html}
       PHP_OPCACHE_VALIDATE_TIMESTAMPS: 1
@@ -26,7 +26,7 @@ services:
       context: "./mysql"
       dockerfile: "Dockerfile"
     container_name: 'lampp-mysql5.7'
-    restart: 'always'
+    restart: on-failure
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
@@ -41,7 +41,9 @@ services:
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: "lampp-phpmyadmin"
-    restart: 'always'
+    depends_on:
+      - mysql
+    restart: always
     links:
       - mysql
     environment:
