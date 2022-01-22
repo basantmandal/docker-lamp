@@ -60,7 +60,7 @@ RUN apt-get --no-install-recommends install -y libfreetype6-dev libjpeg62-turbo-
     docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ && \
     docker-php-ext-install -j$(nproc) gd
 
-#Magento 2.3.6 Specific Extensions
+# Magento 2.3.6 Specific Extensions
 RUN apt-get update -y \
     && apt-get install -y \
     libxslt-dev libxml2-dev
@@ -71,18 +71,35 @@ RUN docker-php-ext-install soap && \
     docker-php-ext-install sockets
 # ---------------------------
 
+# Laravel Specific Updates
+RUN composer global require laravel/installer
+RUN echo "" >> ~/.bashrc && \
+    echo 'export PATH="$HOME/.composer/vendor/bin:$PATH"' >> ~/.bashrc
+
+# Add user for laravel application
+RUN groupadd -g 1000 www
+RUN useradd -u 1000 -ms /bin/bash -g www www
+
 RUN echo "GIT Version:" && git --version
 RUN echo "Curl Version:" && curl --version
 RUN echo "wget Version:" && wget --version
 
 
-
-
 # Enable apache modules
 RUN a2enmod rewrite headers
+
+# Restart Apache Service
+RUN service apache2 restart
 
 # Cleanup
 RUN rm -rf /usr/src/*
 
+# Copy existing application directory permissions
+COPY --chown=www:www . /var/www
+
+# Change current user to www
+USER www
+
 # Set working directory
 WORKDIR /var/www/html
+
