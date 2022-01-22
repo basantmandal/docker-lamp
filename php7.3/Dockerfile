@@ -4,6 +4,8 @@ FROM php:7.3-apache-stretch
 # https://github.com/moby/moby/issues/4032#issuecomment-192327844
 
 ARG DEBIAN_FRONTEND=noninteractive
+ARG USER
+ARG UID
 
 # Update
 RUN apt-get -y update --fix-missing && \
@@ -85,18 +87,23 @@ RUN service apache2 restart
 RUN rm -rf /usr/src/*
 
 # Add user for laravel application
-RUN groupadd -g 1000 www
-RUN useradd -u 1000 -ms /bin/bash -g www www
 
-# Change Current User - www
-USER www
+RUN useradd -G www-data,root -u $UID -d /home/$USER $USER
+RUN mkdir -p /home/$USER/.composer && \
+    chown -R $USER:$USER /home/$USER
+
+# [Optional] Set the default user. Omit if you want to keep the default as root.
+
+USER $USER
 
 # Laravel Specific Updates
 RUN composer global require laravel/installer
 RUN echo 'export PATH="$PATH:$HOME/.composer/vendor/bin"' >> ~/.bashrc
 
 # Copy existing application directory permissions
-COPY --chown=www:www . /var/www
+COPY --chown=$USER:$USER . /var/www
 
 # Set working directory
 WORKDIR /var/www/html
+
+EXPOSE 8000
