@@ -2,14 +2,17 @@
 
 ###  Apache, PHP7.3, MySQL Docker Compose Project - Starter for building LAMP Web Apps using Docker
 
+#### Magento, WordPress & Laravel Docker Compatability
+
 - Includes Apache, PHP7.3, MySQL5.7, PHPMyAdmin & Redis/OpCache
 - PHP Extensions - curl, json, zip, mbstring, gettext, exif, imagick
 - Includes Git2 & Composer2
-- Includes 2 Virtual Host (http://www.wordpress.test & http://www.magento.test)
-- Includes all PHP Extension for WordPress & Magento
+- Includes 3 Virtual Host (http://www.wordpress.test & http://www.magento.test & http://www.laravel.test) 
+- Includes all PHP Extension for WordPress & Magento2.3.x & Laravel 8
 - .env file is used for Environment Variables.
 - Solved PHPMyAdmin Error - The phpMyAdmin configuration storage is not completely configured, some extended features have been deactivated.
 - Fully Compatible with Magento2.3.6 & WordPress 5.8.3
+- Adds Default User other than Root User
 
 ### Prerequisites:
 
@@ -17,6 +20,7 @@ You must have Docker Installed in your System ! Docker version >= 20.10.x & Dock
 
 ### How to use this Docker Compose
 `$ docker-compose build --no-cache`
+
 `$ docker-compose up -d --remove-orphans`
 
 #### Then you can check the status of the containers by running:
@@ -26,6 +30,9 @@ You must have Docker Installed in your System ! Docker version >= 20.10.x & Dock
 
 #### Docker Bash:
 `$ docker exec -it lampp-php7.3 bash`
+
+### Docker Laravel Commands
+`$ php artisan serve --host=www.laravel.test --port=8000`
 
 ![Logo](docs/docker_bash.png) 
 
@@ -47,6 +54,12 @@ You must have Docker Installed in your System ! Docker version >= 20.10.x & Dock
 ![Logo](docs/Magento4.png) 
 ![Logo](docs/Magento5.png) 
 ![Logo](docs/Magento6.png) 
+
+### Laravel Test Screenshots
+![Logo](docs/Laravel01.png) 
+![Logo](docs/Laravel02.png) 
+![Logo](docs/Laravel03.png) 
+![Logo](docs/Laravel04.png) 
 
 ### Download Links for Magento & WordPress
 1. [Download Magento 2.3.6 (https://magento.com/tech-resources/download)](https://magento.com/tech-resources/download "Download Magento 2.3.6")
