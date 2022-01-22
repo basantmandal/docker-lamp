@@ -6,7 +6,7 @@ services:
       context: "./php${PHP_VERSION}"
       dockerfile: "Dockerfile"
     container_name: 'lampp-php${PHP_VERSION}'
-    restart: on-failure
+    restart: unless-stopped
     environment:
       APACHE_DOCUMENT_ROOT: ${APACHE_DOCUMENT_ROOT-/var/www/html}
       PHP_OPCACHE_VALIDATE_TIMESTAMPS: 1
@@ -21,12 +21,15 @@ services:
       - ${PHP_INI}:/usr/local/etc/php/php.ini
       - ${VHOSTS_DIR}:/etc/apache2/sites-enabled
       - ${APACHE_LOG_DIR}:/var/log/apache2
+      - ${PHP_TMP_DIR}:/usr/local/tmp
   mysql:
     build:
       context: "./mysql"
       dockerfile: "Dockerfile"
     container_name: 'lampp-mysql5.7'
-    restart: on-failure
+    links:
+      - webserver
+    restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
@@ -38,12 +41,13 @@ services:
       - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
       - ./mysql/wordpress.sql:/docker-entrypoint-initdb.d/init2.sql
       - ./mysql/magento.sql:/docker-entrypoint-initdb.d/init3.sql
+      - ./mysql/laravel.sql:/docker-entrypoint-initdb.d/init4.sql
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: "lampp-phpmyadmin"
     depends_on:
       - mysql
-    restart: always
+    restart: unless-stopped
     links:
       - mysql
     environment:
