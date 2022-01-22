@@ -43,6 +43,20 @@ You must have Docker Installed in your System ! Docker version >= 20.10.x & Dock
 ### Virtual Host
 1. [WordPress (http://www.wordpress.test)](http://www.wordpress.test "WordPress")
 2. [Magento (http://www.magento.test)](http://www.magento.test "Magento")
+3. [Laravel (http://www.laravel.test)](http://www.laravel.test "Laravel")
+
+**Dont Forget to Add it to your Host File**
+1. Windows Host File - `c:\Windows\System32\Drivers\etc\hosts`
+2. Ubuntu Host File - `sudo nano /etc/hosts`
+
+**ADD THESE**
+
+1. `127.0.0.1 	www.magento.test`
+2. `127.0.0.1 	www.wordpress.test`
+3. `127.0.0.1 	www.laravel.test`
+
+![Logo](docs/CreateVirtualHost.png) 
+
 
 ### WordPress & Magento Test Screenshots
 
