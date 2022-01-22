@@ -2,7 +2,7 @@
 
 ###  Apache, PHP7.3, MySQL Docker Compose Project - Starter for building LAMP Web Apps using Docker
 
-#### Magento, WordPress & Laravel Docker Compatability
+#### Magento, WordPress & Laravel Docker Compatible
 
 - Includes Apache, PHP7.3, MySQL5.7, PHPMyAdmin & Redis/OpCache
 - PHP Extensions - curl, json, zip, mbstring, gettext, exif, imagick
