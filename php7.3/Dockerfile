@@ -6,6 +6,7 @@ FROM php:7.3-apache-stretch
 ARG DEBIAN_FRONTEND=noninteractive
 ARG USER
 ARG UID
+ARG LARAVEL_PORT
 
 # Update
 RUN apt-get -y update --fix-missing && \
@@ -106,4 +107,4 @@ COPY --chown=$USER:$USER . /var/www
 # Set working directory
 WORKDIR /var/www/html
 
-EXPOSE 8000
+EXPOSE $LARAVEL_PORT
