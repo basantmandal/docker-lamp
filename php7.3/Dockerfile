@@ -71,19 +71,9 @@ RUN docker-php-ext-install soap && \
     docker-php-ext-install sockets
 # ---------------------------
 
-# Laravel Specific Updates
-RUN composer global require laravel/installer
-RUN echo "" >> ~/.bashrc && \
-    echo 'export PATH="$HOME/.composer/vendor/bin:$PATH"' >> ~/.bashrc
-
-# Add user for laravel application
-RUN groupadd -g 1000 www
-RUN useradd -u 1000 -ms /bin/bash -g www www
-
 RUN echo "GIT Version:" && git --version
 RUN echo "Curl Version:" && curl --version
 RUN echo "wget Version:" && wget --version
-
 
 # Enable apache modules
 RUN a2enmod rewrite headers
@@ -94,12 +84,19 @@ RUN service apache2 restart
 # Cleanup
 RUN rm -rf /usr/src/*
 
+# Add user for laravel application
+RUN groupadd -g 1000 www
+RUN useradd -u 1000 -ms /bin/bash -g www www
+
+# Change Current User - www
+USER www
+
+# Laravel Specific Updates
+RUN composer global require laravel/installer
+RUN echo 'export PATH="$PATH:$HOME/.composer/vendor/bin"' >> ~/.bashrc
+
 # Copy existing application directory permissions
 COPY --chown=www:www . /var/www
 
-# Change current user to www
-USER www
-
 # Set working directory
 WORKDIR /var/www/html
-
