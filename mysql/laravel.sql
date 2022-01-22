@@ -19,10 +19,9 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `magento2.3.4`
+-- Database: `laravel8`
 --
-CREATE DATABASE IF NOT EXISTS `magento2.3.4` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-
+CREATE DATABASE IF NOT EXISTS `wordpress` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 -- --------------------------------------------------------
 
